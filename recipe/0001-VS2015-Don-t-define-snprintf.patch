@@ -1,0 +1,28 @@
+From 526e7bef2672f9f97c4dea3d7bba2e2f011856ff Mon Sep 17 00:00:00 2001
+From: Ray Donnelly <mingw.android@gmail.com>
+Date: Thu, 2 Jun 2016 11:45:25 +0100
+Subject: [PATCH] VS2015: Don't define snprintf
+
+As the UCRT guards against this, giving the following:
+fatal error C1189: #error:  Macro definition of snprintf
+  conflicts with Standard Library function declaration
+---
+ windows/msvc2013/config.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/windows/msvc2013/config.h b/windows/msvc2013/config.h
+index 4d4290c..01b3f57 100644
+--- windows/msvc2013/config.h
++++ windows/msvc2013/config.h
+@@ -9,7 +9,7 @@
+ #define ssize_t intptr_t
+ #define SSIZE_MAX INTPTR_MAX
+ 
+-#if _MSC_VER <= 1900
++#if _MSC_VER < 1900
+ #define snprintf _snprintf
+ #endif
+ #define strcasecmp _stricmp
+-- 
+2.8.2
+
